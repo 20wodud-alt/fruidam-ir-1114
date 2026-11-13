@@ -345,6 +345,7 @@
         </div>
       </div>
       <div class="actions">
+        <a class="btn" href="https://fruidam-studio.vercel.app/" target="_blank" rel="noopener">🌐 열매담 홈페이지 ↗</a>
         <a class="btn" href="./1114%20%EC%97%B4%EB%A7%A4%EB%8B%B4%20IR%20%EB%8F%99%EC%98%81%EC%83%811.mp4" target="_blank" rel="noopener">🎬 영상 새 탭에서 열기 ↗</a>
         <a class="btn" href="./1114%20%EC%97%B4%EB%A7%A4%EB%8B%B4%20IR.pdf" target="_blank" rel="noopener">📄 PDF 새 탭에서 열기 ↗</a>
         <a class="btn primary" href="./1114%20%EC%97%B4%EB%A7%A4%EB%8B%B4%20IR.pdf" download="1114 열매담 IR.pdf">⬇ PDF 다운로드</a>
@@ -356,6 +357,7 @@
         <button class="tab-btn active" id="tab-video" onclick="setMode('video')">🎬 IR 발표 동영상 (05:39)</button>
         <button class="tab-btn" id="tab-pdf" onclick="setMode('pdf')">📄 IR 발표자료 (PDF)</button>
         <button class="tab-btn" id="tab-split" onclick="setMode('split')">◫ 영상 + PDF 나란히 보기</button>
+        <button class="tab-btn" id="tab-site" onclick="setMode('site')">🌐 열매담 홈페이지</button>
       </div>
       <div class="video-controls-extra" id="videoControls">
         <span class="speed-label">재생 속도:</span>
@@ -396,10 +398,28 @@
           ></iframe>
         </div>
       </section>
+
+      <!-- Website Panel -->
+      <section class="panel hidden" id="panel-site">
+        <div class="panel-header">
+          <div class="panel-title">🌐 열매담(FRUIDAM) 홈페이지 — https://fruidam-studio.vercel.app/</div>
+          <div class="panel-meta">
+            <a class="btn" style="padding:4px 10px; font-size:12px;" href="https://fruidam-studio.vercel.app/" target="_blank" rel="noopener">새 탭에서 열기 ↗</a>
+          </div>
+        </div>
+        <div class="pdf-wrap" style="background:#ffffff;">
+          <iframe
+            id="siteFrame"
+            class="pdf-frame"
+            title="열매담 홈페이지 (fruidam-studio.vercel.app)"
+            data-src="https://fruidam-studio.vercel.app/"
+          ></iframe>
+        </div>
+      </section>
     </main>
 
     <footer class="footer-note">
-      <div>단축키: <span class="kbd">Space</span> 재생/일시정지 · <span class="kbd">F</span> 영상 전체화면 · <span class="kbd">1</span> 영상 · <span class="kbd">2</span> PDF · <span class="kbd">3</span> 나란히 보기</div>
+      <div>단축키: <span class="kbd">Space</span> 재생/일시정지 · <span class="kbd">F</span> 영상 전체화면 · <span class="kbd">1</span> 영상 · <span class="kbd">2</span> PDF · <span class="kbd">3</span> 나란히 보기 · <span class="kbd">4</span> 홈페이지</div>
       <div>열매담(FRUIDAM) · Web IR Package</div>
     </footer>
   </div>
@@ -409,6 +429,8 @@
     const stage = document.getElementById("stage");
     const panelVideo = document.getElementById("panel-video");
     const panelPdf = document.getElementById("panel-pdf");
+    const panelSite = document.getElementById("panel-site");
+    const siteFrame = document.getElementById("siteFrame");
     const videoControls = document.getElementById("videoControls");
 
     function setMode(mode) {
@@ -420,16 +442,27 @@
       if (mode === "video") {
         panelVideo.classList.remove("hidden");
         panelPdf.classList.add("hidden");
+        panelSite.classList.add("hidden");
         videoControls.style.display = "flex";
       } else if (mode === "pdf") {
         panelVideo.classList.add("hidden");
         panelPdf.classList.remove("hidden");
+        panelSite.classList.add("hidden");
         videoControls.style.display = "none";
       } else if (mode === "split") {
         stage.classList.add("mode-split");
         panelVideo.classList.remove("hidden");
         panelPdf.classList.remove("hidden");
+        panelSite.classList.add("hidden");
         videoControls.style.display = "flex";
+      } else if (mode === "site") {
+        panelVideo.classList.add("hidden");
+        panelPdf.classList.add("hidden");
+        panelSite.classList.remove("hidden");
+        videoControls.style.display = "none";
+        if (!siteFrame.src) {
+          siteFrame.src = siteFrame.dataset.src;
+        }
       }
     }
 
@@ -463,6 +496,8 @@
         setMode("pdf");
       } else if (e.key === "3") {
         setMode("split");
+      } else if (e.key === "4") {
+        setMode("site");
       }
     });
   </script>
